@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#5f55d7" />
+  <title>✦ HAMSTERSTUDY ✦</title>
+  <style>
+    :root {
+      --ink: #26233f;
+      --muted: #777394;
+      --paper: #fbfaff;
+      --card: rgba(255,255,255,.84);
+      --line: #ebe8f6;
+      --purple: #6559d9;
+      --purple-dark: #4f45b8;
+      --lilac: #edeaff;
+      --peach: #ffe3d3;
+      --mint: #dff6e9;
+      --sky: #dff0ff;
+      --yellow: #fff3c6;
+      --pink: #ffe0eb;
+      --green: #319a68;
+      --shadow: 0 16px 44px rgba(58, 50, 109, .10);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 92% 2%, rgba(255, 222, 231, .75), transparent 22rem),
+        radial-gradient(circle at 3% 20%, rgba(223, 240, 255, .8), transparent 23rem),
+        var(--paper);
+    }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .shell { max-width: 1440px; margin: 0 auto; padding: 24px 28px 60px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 24px; }
+    .brand { display: flex; align-items: center; gap: 13px; }
+    .brand-mark { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 15px; background: var(--purple); color: white; box-shadow: 0 8px 18px rgba(101,89,217,.25); font-size: 23px; }
+    .eyebrow { color: var(--purple); font-weight: 800; text-transform: uppercase; letter-spacing: .11em; font-size: 11px; }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: clamp(22px, 3vw, 31px); line-height: 1.1; letter-spacing: -.04em; }
+    h2 { font-size: 21px; letter-spacing: -.025em; }
+    h3 { font-size: 15px; }
+    .top-actions { display: flex; align-items: center; gap: 10px; }
+    .routine { display: flex; align-items: center; gap: 8px; padding: 10px 13px; color: #5c567b; background: #fff; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; font-weight: 700; }
+    .routine span { color: var(--purple); }
+    .icon-btn, .primary-btn, .ghost-btn, .chip, .tab { border: 0; transition: .18s ease; }
+    .icon-btn { width: 41px; height: 41px; border-radius: 13px; background: #fff; border: 1px solid var(--line); color: var(--ink); }
+    .icon-btn:hover, .ghost-btn:hover { transform: translateY(-1px); border-color: #c9c4ed; }
+    .hero { display: grid; grid-template-columns: 1.25fr .75fr; gap: 18px; margin-bottom: 18px; }
+    .hero-card { background: linear-gradient(120deg, #6156d6 0%, #7a6ee2 100%); border-radius: 28px; padding: 29px; color: white; min-height: 194px; position: relative; overflow: hidden; box-shadow: var(--shadow); }
+    .hero-card:after { content: "✦"; position: absolute; right: 35px; top: 16px; font-size: 105px; opacity: .12; transform: rotate(12deg); }
+    .hero-card h2 { font-size: clamp(26px, 4vw, 40px); max-width: 620px; line-height: 1.02; margin: 9px 0 12px; }
+    .hero-card p { max-width: 670px; color: #eae7ff; font-size: 14px; line-height: 1.65; }
+    .hero-side { background: var(--card); border: 1px solid var(--line); border-radius: 28px; padding: 24px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: space-between; }
+    .today-line { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 13px; }
+    .today-date { font-size: 25px; font-weight: 850; letter-spacing: -.05em; color: var(--ink); }
+    .sparkle { font-size: 28px; }
+    .section-nav { position: sticky; top: 12px; z-index: 4; display: flex; gap: 6px; overflow-x: auto; padding: 6px; background: rgba(255,255,255,.78); backdrop-filter: blur(14px); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 8px 24px rgba(58,50,109,.07); margin-bottom: 18px; }
+    .tab { padding: 10px 14px; border-radius: 11px; background: transparent; color: var(--muted); white-space: nowrap; font-weight: 800; font-size: 13px; }
+    .tab.active, .tab:hover { background: var(--lilac); color: var(--purple-dark); }
+    .view { display: none; animation: rise .25s ease; }
+    .view.active { display: block; }
+    @keyframes rise { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin-bottom: 18px; }
+    .stat-card { padding: 19px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 8px 26px rgba(58,50,109,.05); min-height: 125px; }
+    .stat-top { display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: 12px; font-weight: 800; }
+    .stat-icon { width: 31px; height: 31px; border-radius: 10px; display: grid; place-items: center; font-size: 16px; }
+    .stat-number { font-size: 30px; line-height: 1; font-weight: 900; letter-spacing: -.05em; margin: 14px 0 8px; }
+    .stat-foot { color: var(--muted); font-size: 12px; }
+    .icon-lilac { background: var(--lilac); } .icon-peach { background: var(--peach); } .icon-mint { background: var(--mint); } .icon-sky { background: var(--sky); }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
+    .grid-main { display: grid; grid-template-columns: 1.2fr .8fr; gap: 18px; }
+    .panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 8px 26px rgba(58,50,109,.05); padding: 22px; }
+    .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 17px; }
+    .panel-head p { color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .section-title { display: flex; align-items: center; gap: 10px; }
+    .section-title .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--purple); }
+    .progress-ring-wrap { display: flex; align-items: center; gap: 22px; min-height: 148px; }
+    .ring { width: 135px; height: 135px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--purple) var(--pct, 0%), #efedf8 0); position: relative; flex: 0 0 auto; }
+    .ring:after { content: ""; width: 96px; height: 96px; background: white; border-radius: 50%; position: absolute; }
+    .ring-center { z-index: 1; text-align: center; position: relative; }
+    .ring-center strong { display: block; font-size: 24px; letter-spacing: -.05em; }
+    .ring-center small { color: var(--muted); font-size: 10px; }
+    .legend { display: grid; gap: 11px; width: 100%; }
+    .legend-row { display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: var(--muted); }
+    .legend-row span:first-child { display: flex; align-items: center; gap: 8px; }
+    .legend-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--purple); } .legend-dot.remaining { background: #e9e6f3; }
+    .bar-row { margin: 15px 0; }
+    .bar-meta { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; margin-bottom: 7px; color: var(--muted); }
+    .bar-meta strong { color: var(--ink); }
+    .bar { height: 10px; border-radius: 99px; background: #f0eef7; overflow: hidden; }
+    .bar > span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #6a5ddd, #a08bf0); width: 0; transition: width .35s ease; }
+    .bar.peach > span { background: linear-gradient(90deg, #ef9c7a, #f6c3a4); }
+    .bar.mint > span { background: linear-gradient(90deg, #4eb87d, #9bdcb4); }
+    .mini-list { display: grid; gap: 9px; }
+    .mini-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px; background: #fff; border: 1px solid var(--line); border-radius: 14px; font-size: 13px; }
+    .mini-item .left { display: flex; align-items: center; gap: 9px; min-width: 0; }
+    .mini-item .left span:last-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tiny-badge, .status-badge { border-radius: 999px; padding: 5px 8px; font-size: 10px; font-weight: 850; white-space: nowrap; }
+    .badge-purple { background: var(--lilac); color: var(--purple-dark); } .badge-mint { background: var(--mint); color: #20784b; } .badge-peach { background: var(--peach); color: #a35637; } .badge-grey { background: #f3f1f8; color: var(--muted); }
+    .quick-actions { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; margin-top: 14px; }
+    .quick-action { padding: 13px 10px; border: 1px dashed #d9d4ee; background: #fff; color: var(--purple-dark); border-radius: 14px; text-align: center; font-size: 12px; font-weight: 800; }
+    .quick-action:hover { background: var(--lilac); border-style: solid; }
+    .primary-btn { background: var(--purple); color: white; padding: 10px 14px; border-radius: 12px; font-weight: 850; font-size: 12px; box-shadow: 0 7px 14px rgba(101,89,217,.2); }
+    .primary-btn:hover { background: var(--purple-dark); transform: translateY(-1px); }
+    .ghost-btn { background: white; color: var(--purple-dark); border: 1px solid var(--line); padding: 9px 12px; border-radius: 11px; font-weight: 800; font-size: 12px; }
+    .filters { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 17px; }
+    .chip { padding: 8px 12px; border-radius: 999px; background: #f5f3fb; color: var(--muted); font-weight: 800; font-size: 11px; }
+    .chip.active, .chip:hover { background: var(--lilac); color: var(--purple-dark); }
+    .topic-group { margin-bottom: 18px; }
+    .topic-group:last-child { margin-bottom: 0; }
+    .topic-group-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .topic-group-head h3 { font-size: 14px; }
+    .topic-count { color: var(--muted); font-size: 11px; }
+    .topic-list { display: grid; gap: 7px; }
+    .topic-row { display: grid; grid-template-columns: 24px minmax(0,1fr) auto; align-items: center; gap: 10px; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; transition: .18s ease; }
+    .topic-row:hover { border-color: #c9c4ed; box-shadow: 0 4px 15px rgba(101,89,217,.06); }
+    .topic-row.done { background: #fbfffc; border-color: #c9ead7; }
+    .check { appearance: none; width: 19px; height: 19px; border-radius: 7px; border: 1.5px solid #cfcbe3; background: #fff; display: grid; place-items: center; cursor: pointer; }
+    .check:checked { background: var(--green); border-color: var(--green); }
+    .check:checked:after { content: "✓"; color: white; font-weight: 900; font-size: 13px; }
+    .topic-name { font-size: 13px; font-weight: 750; }
+    .topic-sub { color: var(--muted); font-size: 10px; margin-top: 3px; }
+    .row-actions { display: flex; align-items: center; gap: 7px; }
+    .status-select, .confidence-select, .text-input, .date-input, textarea, select { border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 10px; padding: 8px 9px; font-size: 11px; outline: none; }
+    .status-select:focus, .confidence-select:focus, .text-input:focus, textarea:focus, select:focus { border-color: #a69eeb; box-shadow: 0 0 0 3px #edeaff; }
+    .status-select { max-width: 116px; }
+    .note-toggle { background: transparent; border: 0; color: var(--muted); font-size: 15px; padding: 2px; }
+    .inline-note { grid-column: 2 / -1; display: none; gap: 7px; }
+    .topic-row.open .inline-note { display: flex; }
+    .inline-note input { flex: 1; }
+    .subject-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+    .subject-card { background: #fff; border: 1px solid var(--line); border-radius: 17px; padding: 15px; }
+    .subject-card-head { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 11px; }
+    .subject-card-head p { color: var(--muted); font-size: 10px; margin-top: 4px; }
+    .unit-list { display: grid; gap: 6px; }
+    .unit { display: flex; align-items: center; gap: 8px; padding: 8px 9px; background: #faf9fe; border-radius: 10px; font-size: 11px; color: #555170; }
+    .unit .check { width: 16px; height: 16px; border-radius: 5px; }
+    .unit .check:checked:after { font-size: 10px; }
+    .unit.done { color: var(--green); background: #f2fbf5; }
+    .calendar-layout { display: grid; grid-template-columns: 1.25fr .75fr; gap: 18px; }
+    .calendar-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .month-title { font-size: 18px; font-weight: 900; letter-spacing: -.03em; }
+    .month-controls { display: flex; gap: 6px; }
+    .month-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; }
+    .weekday { color: var(--muted); font-size: 10px; text-align: center; padding: 5px 0; font-weight: 850; }
+    .day { min-height: 68px; padding: 8px; border: 1px solid var(--line); background: #fff; border-radius: 12px; color: var(--ink); text-align: left; position: relative; }
+    .day:hover { border-color: #b8b1ee; }
+    .day.empty { background: transparent; border-color: transparent; pointer-events: none; }
+    .day.today { box-shadow: inset 0 0 0 2px #c8c1ff; }
+    .day.selected { background: var(--lilac); border-color: #c7c1ff; }
+    .day-num { font-size: 11px; font-weight: 850; }
+    .day-mark { display: flex; gap: 3px; margin-top: 13px; }
+    .mark { width: 6px; height: 6px; border-radius: 50%; background: var(--purple); }
+    .mark.mint { background: var(--green); } .mark.peach { background: #ec9a78; }
+    .calendar-side { display: grid; gap: 14px; align-content: start; }
+    .focus-card { padding: 17px; border-radius: 17px; background: linear-gradient(135deg, #fff3c6, #fff9e8); border: 1px solid #f5e6a5; }
+    .focus-card p { color: #7c6e34; font-size: 12px; line-height: 1.5; margin-top: 8px; }
+    .update-form { display: grid; gap: 15px; }
+    .form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+    label { display: grid; gap: 6px; color: var(--muted); font-size: 11px; font-weight: 800; }
+    .form-full { grid-column: 1 / -1; }
+    textarea { min-height: 105px; resize: vertical; line-height: 1.5; }
+    .flexible-blocks { display: flex; gap: 7px; flex-wrap: wrap; }
+    .block-pill { display: flex; align-items: center; gap: 6px; padding: 8px 10px; background: #faf9fe; border: 1px solid var(--line); border-radius: 999px; font-size: 11px; color: #5c567b; cursor: pointer; }
+    .block-pill:has(input:checked) { background: var(--lilac); border-color: #c7c1ff; color: var(--purple-dark); }
+    .block-pill input { accent-color: var(--purple); }
+    .saved-updates { display: grid; gap: 9px; margin-top: 17px; }
+    .saved-update { border: 1px solid var(--line); border-radius: 14px; padding: 12px; background: #fff; }
+    .saved-update-top { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; font-weight: 850; }
+    .saved-update p { color: var(--muted); line-height: 1.5; font-size: 11px; margin-top: 7px; white-space: pre-wrap; }
+    .notes-list { display: grid; gap: 10px; }
+    .note-card { background: #fff; border: 1px solid var(--line); border-radius: 15px; padding: 14px; }
+    .note-card-top { display: flex; justify-content: space-between; gap: 10px; }
+    .note-card p { color: #67627f; font-size: 12px; line-height: 1.55; margin-top: 8px; white-space: pre-wrap; }
+    .empty { color: var(--muted); font-size: 13px; padding: 22px 4px; text-align: center; }
+    .footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 24px; color: var(--muted); font-size: 11px; padding: 0 3px; }
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 20px); background: #282442; color: white; padding: 11px 15px; border-radius: 12px; font-size: 12px; font-weight: 750; opacity: 0; pointer-events: none; transition: .25s ease; z-index: 9; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    @media (max-width: 980px) { .hero, .grid-main, .calendar-layout { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 640px) { .shell { padding: 16px 13px 45px; } .topbar { align-items: flex-start; } .top-actions .routine { display:none; } .hero-card, .hero-side { padding: 21px; } .grid-2, .subject-grid, .form-grid { grid-template-columns: 1fr; } .stats-grid { gap: 9px; } .stat-card { padding: 14px; min-height: 110px; } .stat-number { font-size: 25px; } .progress-ring-wrap { gap: 14px; } .ring { width: 112px; height: 112px; } .ring:after { width: 80px; height: 80px; } .day { min-height: 54px; padding: 6px; } .day-mark { margin-top: 8px; } .row-actions .status-select { display:none; } .topic-row { grid-template-columns: 23px minmax(0,1fr) auto; } }
+
+    /* Reference-inspired visual system: soft grey canvas, purple pen lines, pink scrapbook details. */
+    :root { --ink:#292477; --muted:#5b5792; --paper:#d9d9dc; --card:#ececef; --line:#6f6b9a; --purple:#3b20c4; --purple-dark:#2e179e; --lilac:#e5e3f8; --peach:#f4accb; --mint:#ddf0e8; --sky:#dfe2ff; --yellow:#fff4b8; --pink:#f5abcd; --shadow:none; --radius:13px; }
+    body { background: #c9c9cd; font-family: "Trebuchet MS", Arial, sans-serif; }
+    .shell { max-width: 1180px; padding: 20px 24px 34px; background: #d7d7da; border: 1px solid #a5a4aa; border-radius: 28px; margin: 18px auto; }
+    .topbar { margin-bottom: 18px; }
+    .brand { gap: 9px; }
+    .brand-mark { width: 37px; height: 37px; border-radius: 7px; background: var(--pink); color: var(--purple); border: 1.5px solid var(--purple); box-shadow: none; font-size: 18px; }
+    .eyebrow { color: var(--purple); letter-spacing: .07em; font-size: 10px; }
+    h1 { font-size: 20px; text-transform: uppercase; letter-spacing: .02em; }
+    h2 { font-size: 18px; letter-spacing: -.01em; }
+    h3 { font-size: 14px; }
+    .routine { background: #e9e9ec; border: 1px solid #817da5; border-radius: 8px; color: var(--ink); padding: 7px 10px; font-size: 11px; }
+    .routine span { color: var(--purple); }
+    .icon-btn { width: 35px; height: 35px; border-radius: 7px; background: #e9e9ec; border: 1px solid #817da5; color: var(--purple); }
+    .hero { gap: 12px; margin-bottom: 12px; }
+    .hero-card { background: var(--pink); border: 1.5px solid var(--purple); border-radius: 14px; color: var(--ink); min-height: 178px; padding: 24px; }
+    .hero-card:after { content: "✿"; right: 22px; top: 7px; color: var(--purple); opacity: .16; }
+    .hero-card h2 { font-size: clamp(24px, 4vw, 36px); color: var(--purple); max-width: 570px; }
+    .hero-card p { color: #4d478b; font-size: 13px; max-width: 600px; }
+    .hero-side { background: #ededf0; border: 1.5px solid #706d8d; border-radius: 14px; padding: 20px; }
+    .today-date { color: var(--purple); font-size: 22px; }
+    .section-nav { top: 10px; gap: 7px; padding: 7px; background: #e7e7ea; border: 1.5px solid #89869e; border-radius: 12px; box-shadow: none; }
+    .tab { border: 1px solid #726da9; border-radius: 8px; color: var(--purple); padding: 9px 10px; background: #ececf0; font-size: 11px; }
+    .tab.active, .tab:hover { background: var(--purple); color: white; }
+    .stat-card, .panel { background: #ececef; border: 1.5px solid #85819d; border-radius: 13px; box-shadow: none; }
+    .stat-card { min-height: 112px; padding: 16px; }
+    .stat-icon { border-radius: 6px; border: 1px solid #7772a0; }
+    .icon-lilac { background: #dedbff; } .icon-peach { background: var(--pink); } .icon-mint { background: #d5eedf; } .icon-sky { background: #dce0ff; }
+    .stat-number { color: var(--purple); font-size: 26px; }
+    .stat-foot, .panel-head p { color: #69659a; }
+    .panel { padding: 18px; }
+    .section-title .dot { width: 8px; height: 8px; border-radius: 2px; background: var(--purple); }
+    .ring { background: conic-gradient(var(--purple) var(--pct,0%), #d7d5e2 0); }
+    .ring:after { background: #ececef; }
+    .bar { background: #d8d6e0; border: 1px solid #c0bdd0; }
+    .bar > span { background: var(--purple); }
+    .bar.peach > span { background: #e77fae; } .bar.mint > span { background: #54a77c; }
+    .mini-item, .topic-row, .subject-card, .unit, .day, .saved-update, .note-card { background: #f0f0f2; border: 1px solid #a5a2b6; border-radius: 8px; }
+    .mini-item:hover, .topic-row:hover { border-color: var(--purple); box-shadow: none; }
+    .tiny-badge, .status-badge { border-radius: 4px; }
+    .badge-purple { background: #d9d2ff; color: var(--purple); } .badge-mint { background: #d4efdf; color: #26704a; } .badge-peach { background: #ffd4e4; color: #9b3c67; } .badge-grey { background: #dfdfe5; color: #5a5780; }
+    .quick-action, .ghost-btn { border: 1.5px solid #756fb1; background: #ededf1; color: var(--purple); border-radius: 7px; }
+    .quick-action:hover, .ghost-btn:hover { background: var(--lilac); border-color: var(--purple); }
+    .primary-btn { background: var(--purple); border-radius: 7px; box-shadow: none; padding: 9px 13px; }
+    .primary-btn:hover { background: #28118d; }
+    .chip { border: 1px solid #8681ad; border-radius: 6px; background: #e6e5eb; color: var(--purple); }
+    .chip.active, .chip:hover { background: var(--purple); color: white; }
+    .check { border-radius: 3px; border-color: #756fa8; }
+    .check:checked { background: var(--purple); border-color: var(--purple); }
+    .status-select, .confidence-select, .text-input, .date-input, textarea, select { border: 1px solid #a19db8; background: #f5f5f7; color: var(--ink); border-radius: 6px; }
+    .status-select:focus, .confidence-select:focus, .text-input:focus, textarea:focus, select:focus { border-color: var(--purple); box-shadow: 0 0 0 2px #d8d2ff; }
+    .focus-card { background: #fff5b7; border: 1px solid #c9b76d; border-radius: 8px; }
+    .focus-card p { color: #6c6030; }
+    .day.today { box-shadow: inset 0 0 0 2px var(--purple); }
+    .day.selected { background: #dfdbff; border-color: var(--purple); }
+    .day-mark .mark { background: var(--purple); } .day-mark .mark.mint { background: #55a37b; }
+    .footer { margin-top: 18px; padding: 11px 14px; background: #bdbdc2; border: 1.5px solid #706d7e; border-radius: 18px; color: var(--purple); font-size: 11px; }
+    .footer span:last-child { color: #56516e; }
+    .lane-add { display:flex; gap:8px; margin-bottom:14px; }
+    .lane-add .text-input { flex:1; min-width:0; }
+    .lane-list { margin-top:4px; }
+    .lane-row.done { background:#e4f4e8; border-color:#73a885; }
+    .lane-row.done .topic-name { color:#2d7650; text-decoration:line-through; }
+    @media (min-width: 641px) { .section-nav { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 640px) { .shell { margin: 0; min-height: 100vh; border-radius: 0; border: 0; padding: 15px 11px 28px; } .section-nav { display: grid; grid-template-columns: repeat(2,1fr); } .hero-card h2 { font-size: 28px; } .footer { position: sticky; bottom: 8px; z-index: 3; } .lane-add { flex-direction:column; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark">🐹</div><div><div class="eyebrow">HAMSTER HERE! ✦</div><h1>✦ HAMSTERSTUDY ✦</h1></div></div>
+      <div class="top-actions"><div class="routine">☼ <span>9 AM</span> → <span>11 PM</span> · flexible blocks</div><button class="icon-btn" id="themeHint" title="A little encouragement">☁</button></div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-card"><div class="eyebrow" style="color:#d9d5ff">Today is allowed to be flexible</div><h2>Small checkmarks, steady progress.</h2><p>Keep GATE and college moving together without forcing every hour into a timetable. Pick a block, record what you learned, and let the tracker remember the rest.</p></div>
+      <div class="hero-side"><div class="today-line"><span id="todayLabel">Today</span><span class="sparkle">🌷</span></div><div class="today-date" id="todayDate">—</div><div><div class="bar-meta"><span>Today's check-in</span><strong id="todayProgressText">0 blocks</strong></div><div class="bar mint"><span id="todayProgressBar"></span></div></div></div>
+    </section>
+
+    <nav class="section-nav" aria-label="Tracker sections">
+      <button class="tab active" data-view="overview">Overview</button><button class="tab" data-view="gate">GATE prep</button><button class="tab" data-view="academics">Academics</button><button class="tab" data-view="extras">Extra topics</button><button class="tab" data-view="youtube">YouTube</button><button class="tab" data-view="substack">Substack</button><button class="tab" data-view="calendar">Calendar</button><button class="tab" data-view="daily">Daily update</button><button class="tab" data-view="notes">Notes</button>
+    </nav>
+
+    <section class="view active" id="overview">
+      <div class="stats-grid">
+        <article class="stat-card"><div class="stat-top"><span>GATE DA topics</span><span class="stat-icon icon-lilac">⌁</span></div><div class="stat-number" id="gateStat">0 / 58</div><div class="stat-foot">topic-wise completion</div></article>
+        <article class="stat-card"><div class="stat-top"><span>Academic units</span><span class="stat-icon icon-peach">▤</span></div><div class="stat-number" id="academicStat">0 / 35</div><div class="stat-foot">7 subjects · 5 units each</div></article>
+        <article class="stat-card"><div class="stat-top"><span>Daily check-ins</span><span class="stat-icon icon-mint">✓</span></div><div class="stat-number" id="checkinStat">0</div><div class="stat-foot">saved on this device</div></article>
+        <article class="stat-card"><div class="stat-top"><span>Next gentle step</span><span class="stat-icon icon-sky">→</span></div><div class="stat-number" style="font-size:20px; padding-top:5px" id="nextStep">Choose one</div><div class="stat-foot">you do not need a perfect day</div></article>
+      </div>
+      <div class="grid-2">
+        <article class="panel"><div class="panel-head"><div><div class="section-title"><span class="dot"></span><h2>Progress at a glance</h2></div><p>Completed versus remaining work, kept separate.</p></div><button class="ghost-btn" data-go="daily">+ Log today</button></div><div class="grid-2"><div class="progress-ring-wrap"><div class="ring" id="gateRing"><div class="ring-center"><strong id="gatePct">0%</strong><small>GATE done</small></div></div><div class="legend"><div class="legend-row"><span><i class="legend-dot"></i>Completed</span><strong id="gateDoneLegend">0</strong></div><div class="legend-row"><span><i class="legend-dot remaining"></i>Remaining</span><strong id="gateRemainLegend">58</strong></div></div></div><div class="progress-ring-wrap"><div class="ring" id="academicRing" style="background:conic-gradient(#ed9b78 var(--pct,0%), #efedf8 0)"><div class="ring-center"><strong id="academicPct">0%</strong><small>ACADEMICS</small></div></div><div class="legend"><div class="legend-row"><span><i class="legend-dot" style="background:#ed9b78"></i>Completed</span><strong id="academicDoneLegend">0</strong></div><div class="legend-row"><span><i class="legend-dot remaining"></i>Remaining</span><strong id="academicRemainLegend">35</strong></div></div></div></div></article>
+        <article class="panel"><div class="panel-head"><div><div class="section-title"><span class="dot" style="background:#ed9b78"></span><h2>Keep the rhythm</h2></div><p>Your existing routine, without rigid slots.</p></div><span class="tiny-badge badge-peach">9 AM — 11 PM</span></div><div class="mini-list"><div class="mini-item"><div class="left"><span>🌤️</span><span>Start with one clear focus</span></div><span class="tiny-badge badge-purple">begin</span></div><div class="mini-item"><div class="left"><span>🧠</span><span>Mix GATE + academics</span></div><span class="tiny-badge badge-mint">balance</span></div><div class="mini-item"><div class="left"><span>📝</span><span>Write what you learned</span></div><span class="tiny-badge badge-peach">remember</span></div><div class="mini-item"><div class="left"><span>🌙</span><span>Close the day by 11 PM</span></div><span class="tiny-badge badge-grey">rest</span></div></div><div class="quick-actions"><button class="quick-action" data-go="gate">Track GATE</button><button class="quick-action" data-go="academics">Track college</button><button class="quick-action" data-go="calendar">See calendar</button></div></article></div>
+      <div class="grid-main" style="margin-top:18px"><article class="panel"><div class="panel-head"><div><div class="section-title"><span class="dot" style="background:#4eb87d"></span><h2>Continue where you left off</h2></div><p>Open items from both lanes.</p></div><button class="ghost-btn" data-go="gate">View all</button></div><div class="mini-list" id="continueList"></div></article><article class="panel"><div class="panel-head"><div><div class="section-title"><span class="dot" style="background:#f1c85a"></span><h2>Latest learning notes</h2></div><p>Short reflections become revision cues.</p></div><button class="ghost-btn" data-go="notes">All notes</button></div><div class="notes-list" id="latestNotes"></div></article></div>
+    </section>
+
+    <section class="view" id="gate"><div class="panel"><div class="panel-head"><div><div class="section-title"><span class="dot"></span><h2>GATE DA preparation</h2></div><p>58 syllabus-aligned topics. Check off a topic, choose its stage, and add a tiny note when useful.</p></div><button class="primary-btn" data-go="daily">+ Daily update</button></div><div class="filters" id="gateFilters"><button class="chip active" data-filter="all">All topics</button><button class="chip" data-filter="Not started">Not started</button><button class="chip" data-filter="Learning">Learning</button><button class="chip" data-filter="Revised">Revised</button><button class="chip" data-filter="Exam-ready">Exam-ready</button></div><div id="gateTopics"></div></div></section>
+
+    <section class="view" id="academics"><div class="panel"><div class="panel-head"><div><div class="section-title"><span class="dot" style="background:#ed9b78"></span><h2>College academics</h2></div><p>Seven subject lanes with five units each. Rename the subject labels to match your semester.</p></div><button class="primary-btn" data-go="daily">+ Daily update</button></div><div class="filters"><button class="chip active" data-acad-filter="all">All subjects</button><button class="chip" data-acad-filter="inprogress">In progress</button><button class="chip" data-acad-filter="complete">Complete</button></div><div class="subject-grid" id="academicSubjects"></div></div></section>
+
+    <section class="view" id="extras"><div class="panel"><div class="panel-head"><div><div class="section-title"><span class="dot" style="background:#54a77c"></span><h2>Extra study topics</h2></div><p>Keep the useful beyond-syllabus work visible without mixing it into GATE or college.</p></div><span class="tiny-badge badge-mint">your side quests</span></div><form class="lane-add" id="extraForm"><input class="text-input" id="extraInput" placeholder="Add an extra topic…" required><button class="primary-btn" type="submit">+ Add topic</button></form><div class="topic-list lane-list" id="extraTopicsList"></div></div></section>
+
+    <section class="view" id="youtube"><div class="panel"><div class="panel-head"><div><div class="section-title"><span class="dot" style="background:#ed7fae"></span><h2>YouTube space</h2></div><p>Track ideas from tiny spark to published video.</p></div><span class="tiny-badge badge-peach">create + share</span></div><form class="lane-add" id="youtubeForm"><input class="text-input" id="youtubeInput" placeholder="Add a video idea…" required><button class="primary-btn" type="submit">+ Add video</button></form><div class="topic-list lane-list" id="youtubeList"></div></div></section>
+
+    <section class="view" id="substack"><div class="panel"><div class="panel-head"><div><div class="section-title"><span class="dot" style="background:#f1c85a"></span><h2>Substack space</h2></div><p>Keep essays, reflections, and article ideas moving gently.</p></div><span class="tiny-badge badge-peach">write + publish</span></div><form class="lane-add" id="substackForm"><input class="text-input" id="substackInput" placeholder="Add an article idea…" required><button class="primary-btn" type="submit">+ Add article</button></form><div class="topic-list lane-list" id="substackList"></div></div></section>
+
+    <section class="view" id="calendar"><div class="calendar-layout"><article class="panel"><div class="calendar-head"><div><div class="eyebrow">Study calendar</div><div class="month-title" id="monthTitle">—</div></div><div class="month-controls"><button class="icon-btn" id="prevMonth">‹</button><button class="icon-btn" id="nextMonth">›</button></div></div><div class="month-grid" id="calendarGrid"></div></article><aside class="calendar-side"><div class="focus-card"><div class="eyebrow" style="color:#a78b24">A soft rule</div><h3 style="margin-top:7px">Plan blocks, not perfect hours.</h3><p>Study time can move around. What matters is leaving a small trace of what you did and what you learned.</p></div><article class="panel"><div class="panel-head"><div><div class="section-title"><span class="dot" style="background:#4eb87d"></span><h2 id="selectedDateTitle">Selected day</h2></div><p>Check-ins saved for this date.</p></div></div><div class="saved-updates" id="selectedDayUpdates"></div><button class="primary-btn" style="width:100%; margin-top:12px" id="logSelectedDay">Log this day</button></article></aside></div></section>
+
+    <section class="view" id="daily"><div class="grid-2"><article class="panel"><div class="panel-head"><div><div class="section-title"><span class="dot" style="background:#4eb87d"></span><h2>Daily update</h2></div><p>Keep the time flexible; capture the work and the learning.</p></div><span class="tiny-badge badge-mint">saved locally</span></div><form class="update-form" id="dailyForm"><div class="form-grid"><label>Date<input class="date-input" type="date" id="updateDate" required></label><label>Energy today<select id="energy"><option>Soft start</option><option>Steady</option><option>Focused</option><option>Low battery</option></select></label><label class="form-full">What did you work on?<input class="text-input" id="focusText" placeholder="e.g. Probability — Bayes theorem + 10 PYQs" required></label><label>Start time (optional)<input class="text-input" type="time" id="startTime"></label><label>End time (optional)<input class="text-input" type="time" id="endTime"></label><label class="form-full">Flexible blocks</label><div class="flexible-blocks form-full"><label class="block-pill"><input type="checkbox" value="GATE" checked> GATE</label><label class="block-pill"><input type="checkbox" value="Academics"> Academics</label><label class="block-pill"><input type="checkbox" value="Revision"> Revision</label><label class="block-pill"><input type="checkbox" value="Career / projects"> Career / projects</label><label class="block-pill"><input type="checkbox" value="Content"> Content</label><label class="block-pill"><input type="checkbox" value="Break / rest"> Break / rest</label><label class="block-pill"><input type="checkbox" value="Reward"> Reward</label></div><label class="form-full">What did I learn? <span style="font-weight:500;color:#aaa5bf">(your future revision cue)</span><textarea id="learnedText" placeholder="Write 2–4 lines: a concept, a mistake, a formula, or a question to revisit."></textarea></label><label class="form-full">Next tiny step<textarea id="nextText" style="min-height:65px" placeholder="e.g. Revise conditional probability tomorrow and attempt PYQs 6–10."></textarea></label></div><button class="primary-btn" type="submit">Save today's update</button></form></article><article class="panel"><div class="panel-head"><div><div class="section-title"><span class="dot" style="background:#f1c85a"></span><h2>Recent check-ins</h2></div><p>A gentle record of showing up.</p></div></div><div class="saved-updates" id="recentUpdates"></div></article></div></section>
+
+    <section class="view" id="notes"><div class="grid-2"><article class="panel"><div class="panel-head"><div><div class="section-title"><span class="dot" style="background:#f1c85a"></span><h2>Quick note</h2></div><p>Save formulas, doubts, mistakes, or revision cues.</p></div></div><form class="update-form" id="noteForm"><label>Category<select id="noteCategory"><option>GATE</option><option>Academics</option><option>Revision cue</option><option>Question to ask</option><option>Win of the day</option></select></label><label>Note<textarea id="noteText" placeholder="Write it in your own words…" required></textarea></label><button class="primary-btn" type="submit">Save note</button></form></article><article class="panel"><div class="panel-head"><div><div class="section-title"><span class="dot" style="background:#f1c85a"></span><h2>Learning notes</h2></div><p>Keep the useful bits close for revision.</p></div><span class="tiny-badge badge-grey" id="noteCount">0 notes</span></div><div class="notes-list" id="allNotes"></div></article></div></section>
+
+    <div class="footer"><span>◉ &nbsp; ◎ &nbsp; ✉ &nbsp; ♡</span><span>GATE + Academics · keep going gently ✦</span></div>
+  </main>
+  <div class="toast" id="toast"></div>
+  <script>
+    const GATE_GROUPS = [
+      ['Probability & Statistics',['Counting principles','Probability fundamentals','Conditional probability','Bayes theorem','Random variables','Probability distributions','Expectation and variance','Covariance and correlation','Sampling and estimation','Hypothesis testing']],
+      ['Linear Algebra',['Vectors and matrices','Systems of linear equations','Matrix rank','Linear independence and basis','Eigenvalues and eigenvectors','Linear transformations','Orthogonality and projections','Singular value decomposition']],
+      ['Calculus & Optimization',['Limits and continuity','Differentiation','Partial derivatives','Integration','Taylor series','Optimization basics']],
+      ['Programming & Data Structures',['Python basics','Functions and recursion','Object-oriented programming','Arrays and strings','Linked lists and stacks','Queues and hashing','Trees and binary search trees','Heaps and priority queues','Graphs and traversal','Sorting and searching']],
+      ['Database Management Systems',['ER model and relational model','SQL and relational algebra','Functional dependencies','Normalization','Transactions and concurrency control','Indexing and query processing']],
+      ['AI & Machine Learning',['Machine learning fundamentals','Linear regression','Logistic regression','Regularization','Classification metrics','Naive Bayes','K-nearest neighbours','Decision trees and random forests','Support vector machines','Clustering and dimensionality reduction']],
+      ['General Aptitude',['Verbal aptitude','Reading comprehension','Grammar and sentence correction','Data interpretation','Numerical aptitude','Logical reasoning','Analytical reasoning','Spatial and visual reasoning']]
+    ];
+    const ACADEMIC_SUBJECTS = Array.from({length:7},(_,i)=>({id:'subject-'+(i+1),name:'Academic Subject '+(i+1),units:Array.from({length:5},(_,j)=>'Unit '+(j+1))}));
+    const STORAGE_KEY='gate-academics-tracker-v1';
+    const todayISO=()=>new Date().toISOString().slice(0,10);
+    const dateLabel=(iso,opts={month:'short',day:'numeric',year:'numeric'})=>new Intl.DateTimeFormat('en-IN',opts).format(new Date(iso+'T12:00:00'));
+    const state = JSON.parse(localStorage.getItem(STORAGE_KEY)||'null') || {gate:{}, academics:{}, updates:[], notes:[]};
+    const DEFAULT_EXTRA_TOPICS=[{id:'extra-1',title:'LeetCode & DSA practice',status:'Not started',done:false,note:''},{id:'extra-2',title:'Placement preparation',status:'Not started',done:false,note:''},{id:'extra-3',title:'Portfolio project learning',status:'Not started',done:false,note:''},{id:'extra-4',title:'Revision backlog',status:'Not started',done:false,note:''}];
+    const DEFAULT_YOUTUBE=[{id:'youtube-1',title:'Next study video idea',status:'Idea',done:false,note:''},{id:'youtube-2',title:'Script / outline',status:'Idea',done:false,note:''}];
+    const DEFAULT_SUBSTACK=[{id:'substack-1',title:'Next article idea',status:'Idea',done:false,note:''},{id:'substack-2',title:'Draft / edit / publish',status:'Idea',done:false,note:''}];
+    state.extraTopics=state.extraTopics||JSON.parse(JSON.stringify(DEFAULT_EXTRA_TOPICS)); state.youtube=state.youtube||JSON.parse(JSON.stringify(DEFAULT_YOUTUBE)); state.substack=state.substack||JSON.parse(JSON.stringify(DEFAULT_SUBSTACK));
+    const save=()=>localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+    const toast=(message)=>{const el=document.getElementById('toast');el.textContent=message;el.classList.add('show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>el.classList.remove('show'),2200)};
+    const allGate=()=>GATE_GROUPS.flatMap(([group,topics])=>topics.map((name,i)=>({id:'g-'+group.replace(/[^a-z0-9]+/gi,'-').toLowerCase()+'-'+i,name,group}))); 
+    const gateDone=()=>allGate().filter(t=>state.gate[t.id]?.done).length;
+    const academicTotal=()=>ACADEMIC_SUBJECTS.reduce((n,s)=>n+s.units.length,0);
+    const academicDone=()=>ACADEMIC_SUBJECTS.reduce((n,s)=>n+s.units.filter((_,i)=>state.academics[s.id+'-'+i]).length,0);
+    const statusFor=(id)=>state.gate[id]?.status || 'Not started';
+    function renderStats(){
+      const gd=gateDone(), gt=allGate().length, ad=academicDone(), at=academicTotal();
+      document.getElementById('gateStat').textContent=`${gd} / ${gt}`; document.getElementById('academicStat').textContent=`${ad} / ${at}`; document.getElementById('checkinStat').textContent=state.updates.length;
+      document.getElementById('gatePct').textContent=Math.round(gd/gt*100)+'%'; document.getElementById('academicPct').textContent=Math.round(ad/at*100)+'%';
+      document.getElementById('gateRing').style.setProperty('--pct',(gd/gt*100)+'%'); document.getElementById('academicRing').style.setProperty('--pct',(ad/at*100)+'%');
+      document.getElementById('gateDoneLegend').textContent=gd;document.getElementById('gateRemainLegend').textContent=gt-gd;document.getElementById('academicDoneLegend').textContent=ad;document.getElementById('academicRemainLegend').textContent=at-ad;
+      const todays=state.updates.filter(u=>u.date===todayISO()).length;document.getElementById('todayProgressText').textContent=todays+' check-in'+(todays===1?'':'s');document.getElementById('todayProgressBar').style.width=Math.min(100,todays*33)+'%';
+      const next=allGate().find(t=>!state.gate[t.id]?.done);document.getElementById('nextStep').textContent=next?next.name:'Celebrate your progress';
+    }
+    function renderGate(filter='all'){
+      const root=document.getElementById('gateTopics'); root.innerHTML='';
+      GATE_GROUPS.forEach(([group,topics])=>{const items=topics.map((name,i)=>({id:'g-'+group.replace(/[^a-z0-9]+/gi,'-').toLowerCase()+'-'+i,name,group})).filter(t=>filter==='all'||statusFor(t.id)===filter);if(!items.length)return;const wrap=document.createElement('div');wrap.className='topic-group';const done=topics.filter((_,i)=>state.gate['g-'+group.replace(/[^a-z0-9]+/gi,'-').toLowerCase()+'-'+i]?.done).length;wrap.innerHTML=`<div class="topic-group-head"><h3>${group}</h3><span class="topic-count">${done}/${topics.length} complete</span></div><div class="topic-list">${items.map(t=>{const d=state.gate[t.id]||{};return `<div class="topic-row ${d.done?'done':''}" data-topic="${t.id}"><input class="check topic-check" type="checkbox" ${d.done?'checked':''} aria-label="Mark ${t.name} complete"><div><div class="topic-name">${t.name}</div><div class="topic-sub">${d.note||'Add a tiny progress note if useful.'}</div></div><div class="row-actions"><select class="status-select" aria-label="Status"><option ${statusFor(t.id)==='Not started'?'selected':''}>Not started</option><option ${statusFor(t.id)==='Learning'?'selected':''}>Learning</option><option ${statusFor(t.id)==='Revised'?'selected':''}>Revised</option><option ${statusFor(t.id)==='Exam-ready'?'selected':''}>Exam-ready</option></select><button class="note-toggle" title="Add note">⌕</button></div><div class="inline-note"><input class="text-input topic-note" value="${(d.note||'').replace(/"/g,'&quot;')}" placeholder="What did you cover or want to revisit?"><select class="confidence-select"><option>Confidence: —</option><option ${d.conf==='Low'?'selected':''}>Low</option><option ${d.conf==='Medium'?'selected':''}>Medium</option><option ${d.conf==='High'?'selected':''}>High</option></select></div></div>`}).join('')}</div>`;root.appendChild(wrap)});
+      if(!root.innerHTML)root.innerHTML='<div class="empty">Nothing here yet — choose another stage or keep going gently.</div>';
+    }
+    function renderAcademics(filter='all'){
+      const root=document.getElementById('academicSubjects');root.innerHTML='';ACADEMIC_SUBJECTS.forEach(s=>{const done=s.units.filter((_,i)=>state.academics[s.id+'-'+i]).length;if(filter==='inprogress'&&(done===0||done===5))return;if(filter==='complete'&&done!==5)return;const card=document.createElement('div');card.className='subject-card';card.innerHTML=`<div class="subject-card-head"><div><h3>${s.name}</h3><p>Click the label later to rename in your plan.</p></div><span class="tiny-badge ${done===5?'badge-mint':done?'badge-peach':'badge-grey'}">${done}/5</span></div><div class="unit-list">${s.units.map((u,i)=>{const id=s.id+'-'+i;return `<label class="unit ${state.academics[id]?'done':''}"><input class="check unit-check" type="checkbox" data-unit="${id}" ${state.academics[id]?'checked':''}> <span>${u}</span></label>`}).join('')}</div>`;root.appendChild(card)})
+    }
+    function renderContinue(){const root=document.getElementById('continueList');const open=allGate().filter(t=>!state.gate[t.id]?.done).slice(0,4);root.innerHTML=open.map(t=>`<div class="mini-item"><div class="left"><span>○</span><span>${t.name}</span></div><span class="tiny-badge badge-grey">${t.group.split(' ')[0]}</span></div>`).join('')||'<div class="empty">Everything here is checked off. Lovely.</div>'}
+    function renderNotes(){const root=document.getElementById('allNotes'),latest=document.getElementById('latestNotes');document.getElementById('noteCount').textContent=state.notes.length+' note'+(state.notes.length===1?'':'s');const html=(state.notes.slice().reverse().map(n=>`<div class="note-card"><div class="note-card-top"><span class="tiny-badge badge-${n.category==='GATE'?'purple':n.category==='Win of the day'?'mint':'peach'}">${n.category}</span><span style="color:#aaa5bf;font-size:10px">${dateLabel(n.date,{month:'short',day:'numeric'})}</span></div><p>${n.text}</p></div>`).join(''))||'<div class="empty">Your useful little notes will live here.</div>';root.innerHTML=html;latest.innerHTML=state.notes.slice().reverse().slice(0,2).map(n=>`<div class="note-card"><div class="note-card-top"><span class="tiny-badge badge-purple">${n.category}</span><span style="color:#aaa5bf;font-size:10px">${dateLabel(n.date,{month:'short',day:'numeric'})}</span></div><p>${n.text}</p></div>`).join('')||'<div class="empty">No notes yet. Add one after a study block.</div>'}
+    function updateCard(u){return `<div class="saved-update"><div class="saved-update-top"><span>${dateLabel(u.date,{month:'short',day:'numeric',year:'numeric'})}</span><span class="tiny-badge badge-${u.energy==='Low battery'?'peach':'mint'}">${u.energy}</span></div><div style="margin-top:7px;font-size:12px;font-weight:800">${u.focus}</div><div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:8px">${u.blocks.map(b=>`<span class="tiny-badge badge-grey">${b}</span>`).join('')}</div>${u.learned?`<p>${u.learned}</p>`:''}${u.next?`<div style="margin-top:7px;color:#5f55d7;font-size:11px;font-weight:750">Next: ${u.next}</div>`:''}</div>`}
+    function renderUpdates(){document.getElementById('recentUpdates').innerHTML=state.updates.slice().reverse().slice(0,8).map(updateCard).join('')||'<div class="empty">No check-ins yet. Your first one can be tiny.</div>';renderSelectedDay();}
+    let calendarCursor=new Date();let selectedDate=todayISO();
+    function renderCalendar(){const y=calendarCursor.getFullYear(),m=calendarCursor.getMonth();document.getElementById('monthTitle').textContent=new Intl.DateTimeFormat('en-IN',{month:'long',year:'numeric'}).format(calendarCursor);const root=document.getElementById('calendarGrid');root.innerHTML=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="weekday">${d}</div>`).join('');let first=(new Date(y,m,1).getDay()+6)%7;let days=new Date(y,m+1,0).getDate();for(let i=0;i<first;i++)root.innerHTML+='<button class="day empty"></button>';for(let d=1;d<=days;d++){const iso=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;const has=state.updates.some(u=>u.date===iso),cls=(iso===todayISO()?' today':'')+(iso===selectedDate?' selected':'');root.innerHTML+=`<button class="day${cls}" data-date="${iso}"><span class="day-num">${d}</span>${has?'<span class="day-mark"><i class="mark"></i><i class="mark mint"></i></span>':''}</button>`}renderSelectedDay()}
+    function renderSelectedDay(){document.getElementById('selectedDateTitle').textContent=dateLabel(selectedDate,{month:'short',day:'numeric'});const items=state.updates.filter(u=>u.date===selectedDate);document.getElementById('selectedDayUpdates').innerHTML=items.map(updateCard).join('')||'<div class="empty">No update saved for this day.</div>'}
+    function resetDailyForm(date=todayISO()){document.getElementById('updateDate').value=date;document.getElementById('focusText').value='';document.getElementById('startTime').value='';document.getElementById('endTime').value='';document.getElementById('learnedText').value='';document.getElementById('nextText').value='';document.querySelectorAll('#dailyForm .block-pill input').forEach((x,i)=>x.checked=i===0)}
+    function renderLane(lane,rootId,statuses,placeholder){const root=document.getElementById(rootId);const items=state[lane]||[];root.innerHTML=items.map(item=>`<div class="topic-row lane-row ${item.done?'done':''}" data-lane="${lane}" data-item="${item.id}"><input class="check lane-check" type="checkbox" ${item.done?'checked':''} aria-label="Mark ${item.title} complete"><div><div class="topic-name">${item.title}</div><div class="topic-sub">${item.note||placeholder}</div></div><div class="row-actions"><select class="status-select lane-status">${statuses.map(s=>`<option ${item.status===s?'selected':''}>${s}</option>`).join('')}</select><button class="note-toggle" title="Add note">⌕</button></div><div class="inline-note"><input class="text-input lane-note" value="${(item.note||'').replace(/"/g,'&quot;')}" placeholder="Add a note or next step…"></div></div>`).join('')||'<div class="empty">Nothing added yet. Start with one small item.</div>'}
+    function renderLanes(){renderLane('extraTopics','extraTopicsList',['Not started','Learning','Revised','Done'],'Add a tiny progress note if useful.');renderLane('youtube','youtubeList',['Idea','Scripting','Filming','Editing','Published'],'Track the next little step.');renderLane('substack','substackList',['Idea','Drafting','Editing','Published'],'Track the next little step.')}
+    function refresh(){renderStats();renderGate(currentGateFilter);renderAcademics(currentAcademicFilter);renderContinue();renderNotes();renderUpdates();renderCalendar();renderLanes();document.getElementById('todayLabel').textContent=new Intl.DateTimeFormat('en-IN',{weekday:'long'}).format(new Date());document.getElementById('todayDate').textContent=dateLabel(todayISO(),{month:'long',day:'numeric',year:'numeric'});}
+    let currentGateFilter='all',currentAcademicFilter='all';
+    document.addEventListener('click',e=>{const tab=e.target.closest('.tab');if(tab){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(tab.dataset.view).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}const go=e.target.closest('[data-go]');if(go){const target=go.dataset.go;document.querySelector(`[data-view="${target}"]`).click()}const noteToggle=e.target.closest('.note-toggle');if(noteToggle){noteToggle.closest('.topic-row').classList.toggle('open')}const day=e.target.closest('.day:not(.empty)');if(day){selectedDate=day.dataset.date;renderCalendar()}if(e.target.id==='prevMonth'){calendarCursor.setMonth(calendarCursor.getMonth()-1);renderCalendar()}if(e.target.id==='nextMonth'){calendarCursor.setMonth(calendarCursor.getMonth()+1);renderCalendar()}if(e.target.id==='logSelectedDay'){resetDailyForm(selectedDate);document.querySelector('[data-view="daily"]').click()}if(e.target.id==='themeHint')toast('A reminder: consistency can look wonderfully small ✦')});
+    document.addEventListener('change',e=>{if(e.target.matches('.topic-check')){const row=e.target.closest('.topic-row'),id=row.dataset.topic;state.gate[id]=state.gate[id]||{};state.gate[id].done=e.target.checked;if(e.target.checked){state.gate[id].status='Exam-ready'}else if(state.gate[id].status==='Exam-ready')state.gate[id].status='Learning';save();refresh();toast(e.target.checked?'Topic checked off ✦':'Topic reopened')}if(e.target.matches('.status-select')&&!e.target.matches('.lane-status')){const id=e.target.closest('.topic-row').dataset.topic;state.gate[id]=state.gate[id]||{};state.gate[id].status=e.target.value;state.gate[id].done=e.target.value==='Exam-ready';save();refresh()}if(e.target.matches('.confidence-select')){const id=e.target.closest('.topic-row').dataset.topic;state.gate[id]=state.gate[id]||{};state.gate[id].conf=e.target.value;save()}if(e.target.matches('.unit-check')){state.academics[e.target.dataset.unit]=e.target.checked;save();refresh();toast(e.target.checked?'Unit completed ✦':'Unit reopened')}if(e.target.matches('[data-filter]')){currentGateFilter=e.target.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===e.target));renderGate(currentGateFilter)}if(e.target.matches('[data-acad-filter]')){currentAcademicFilter=e.target.dataset.acadFilter;document.querySelectorAll('[data-acad-filter]').forEach(x=>x.classList.toggle('active',x===e.target));renderAcademics(currentAcademicFilter)}});
+    document.addEventListener('input',e=>{if(e.target.matches('.topic-note')){const id=e.target.closest('.topic-row').dataset.topic;state.gate[id]=state.gate[id]||{};state.gate[id].note=e.target.value;save();const sub=e.target.closest('.topic-row').querySelector('.topic-sub');if(sub)sub.textContent=e.target.value||'Add a tiny progress note if useful.'}});
+    document.addEventListener('change',e=>{if(e.target.matches('.lane-check,.lane-status')){const row=e.target.closest('.lane-row'),items=state[row.dataset.lane]||[],item=items.find(x=>x.id===row.dataset.item);if(!item)return;if(e.target.matches('.lane-check')){item.done=e.target.checked;item.status=e.target.checked?(row.dataset.lane==='extraTopics'?'Done':'Published'):(row.dataset.lane==='extraTopics'?'Not started':'Idea')}else{item.status=e.target.value;item.done=e.target.value==='Done'||e.target.value==='Published'}save();renderLanes();renderStats();toast(item.done?'Checked off ✦':'Updated')}});
+    document.addEventListener('input',e=>{if(e.target.matches('.lane-note')){const row=e.target.closest('.lane-row'),item=(state[row.dataset.lane]||[]).find(x=>x.id===row.dataset.item);if(item){item.note=e.target.value;save();const sub=row.querySelector('.topic-sub');if(sub)sub.textContent=e.target.value||'Add a tiny progress note if useful.'}}});
+    [['extraForm','extraInput','extraTopics'],['youtubeForm','youtubeInput','youtube'],['substackForm','substackInput','substack']].forEach(([formId,inputId,lane])=>document.getElementById(formId).addEventListener('submit',e=>{e.preventDefault();const input=document.getElementById(inputId);const first=lane==='extraTopics'?'Not started':'Idea';state[lane].push({id:lane+'-'+Date.now(),title:input.value.trim(),status:first,done:false,note:''});save();input.value='';renderLanes();toast('Added to '+(lane==='extraTopics'?'extra topics':lane)+' ✦')}));
+    document.getElementById('dailyForm').addEventListener('submit',e=>{e.preventDefault();const u={id:Date.now(),date:document.getElementById('updateDate').value,energy:document.getElementById('energy').value,focus:document.getElementById('focusText').value,start:document.getElementById('startTime').value,end:document.getElementById('endTime').value,blocks:[...document.querySelectorAll('#dailyForm .block-pill input:checked')].map(x=>x.value),learned:document.getElementById('learnedText').value,next:document.getElementById('nextText').value};state.updates.push(u);save();selectedDate=u.date;refresh();resetDailyForm(u.date);toast('Daily update saved ✦')});
+    document.getElementById('noteForm').addEventListener('submit',e=>{e.preventDefault();state.notes.push({date:todayISO(),category:document.getElementById('noteCategory').value,text:document.getElementById('noteText').value});save();renderNotes();document.getElementById('noteText').value='';toast('Note saved for later ✦')});
+    resetDailyForm();refresh();
+  </script>
+</body>
+</html>
